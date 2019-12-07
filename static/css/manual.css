@@ -1,0 +1,36 @@
+.landing_bg {
+    background-image: url("../img/page-bg2.png");
+    background-color: rgb(255, 255, 255);
+    background-position: bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.navbar-bg-color {
+    background-color: #7692FF !important;
+}
+
+h1 {
+    color: #0288d1;
+}
+
+h3 {
+    color: #F18F01;
+}
+
+.half-rule {
+    background-color: #F18F01;
+}
+
+.masthead-lead {
+    color: black;
+    font-size: small;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.card-height-325 {
+    height: 325px;
+}
