@@ -1,24 +1,46 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from base_app.models import Githubrepo, Profile, Webpage, AccessRecord, KnownledgeOf, StudyTimeline, Gitrepo
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse, HttpResponseRedirect
+from base_app.models import Project, Profile, Webpage, AccessRecord, KnownledgeOf, StudyTimeline, Githubrepo
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import View, DetailView, ListView
+from .forms import ContactForm
 # Create your views here.
 
 
 def index(request):
-    # Obtain the context from the HTTP request.
-    # context = RequestContext(request)
 
-    # Query the database for a list of ALL categories currently stored.
-    # Order the knowledge by framework in asc order.
-
-    # Place the list in our context_dict dictionary which will be passed to the template engine.
     kf_list = KnownledgeOf.objects.order_by('framework')
-    # context_dict = {'kf': kf_list}
-
     profile = Profile.objects.order_by('name')
-    context_dict = {'kf': kf_list, 'profile': profile}
+    project = Project.objects.order_by('number')
+
+    # Mail ko part
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email,
+                          ['sujan.rays99@gmail.com'])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return redirect('success')
+
+    context_dict = {'kf': kf_list, 'profile': profile,
+                    'project': project, 'form': form}
 
     # Render the response and send it back!
     return render(request, 'base_app/index.html', context=context_dict)
+
+
+def emailView(request):
+
+    return render(request, "email.html", {'form': form})
+
+
+def successView(request):
+    return HttpResponse('Success! Thank you for your message.')

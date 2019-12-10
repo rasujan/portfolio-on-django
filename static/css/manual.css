@@ -14,8 +14,14 @@ h1 {
     color: #0288d1;
 }
 
-h3 {
-    color: #F18F01;
+.description {
+    font-weight: lighter;
+    color: rgb(33, 33, 33);
+}
+
+.name {
+    font-family: sans-serif;
+    font-weight: bold;
 }
 
 .half-rule {
@@ -33,4 +39,12 @@ h3 {
 
 .card-height-325 {
     height: 325px;
+}
+
+.social-list-item {
+    color: #0288d1;
+}
+
+.social-list-item:hover {
+    color: black;
 }

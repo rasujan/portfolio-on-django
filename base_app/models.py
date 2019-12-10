@@ -10,13 +10,14 @@ class Githubrepo(models.Model):
         return self.repo_name
 
 
-class Gitrepo(models.Model):
-    repo_name = models.CharField(max_length=264, unique=True)
-    repo_description = models.CharField(max_length=264, unique=True)
-    repo_link = models.CharField(max_length=264, unique=True)
+class Project(models.Model):
+    number = models.CharField(max_length=264, unique=True)
+    name = models.CharField(max_length=264, unique=True)
+    description = models.CharField(max_length=264, unique=True)
+    link = models.CharField(max_length=264)
 
     def __str__(self):
-        return self.repo_name
+        return self.name
 
 
 class KnownledgeOf(models.Model):
